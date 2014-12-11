@@ -3,8 +3,8 @@
 
 PKG             := gst-plugins-good
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 1.2.4
-$(PKG)_CHECKSUM := 4af2e2e091e306d69f36b5bbf722a557acb8d66e
+$(PKG)_VERSION  := 1.4.4
+$(PKG)_CHECKSUM := b2c1691bd13d4567788dcb3af49a99401f057112
 $(PKG)_SUBDIR   := $(PKG)-$($(PKG)_VERSION)
 $(PKG)_FILE     := $(PKG)-$($(PKG)_VERSION).tar.xz
 $(PKG)_URL      := http://gstreamer.freedesktop.org/src/$(PKG)/$($(PKG)_FILE)
@@ -20,10 +20,7 @@ define $(PKG)_BUILD
     #   http://www.videolan.org/developers/vlc/doc/doxygen/html/vlc__codecs_8h-source.html
     #   http://lists.mplayerhq.hu/pipermail/mplayer-cvslog/2004-August/019283.html
     cd '$(1)' && ./configure \
-        --host='$(TARGET)' \
-        --build="`config.guess`" \
-        --prefix='$(PREFIX)/$(TARGET)' \
-        --disable-shared \
+	$(MXE_CONFIGURE_OPTS) \
         --disable-debug \
         --disable-examples \
         --disable-aalib \
@@ -33,5 +30,3 @@ define $(PKG)_BUILD
         --with-html-dir='$(1)/sink'
     $(MAKE) -C '$(1)' -j '$(JOBS)' install CFLAGS='-DWAVE_FORMAT_DOLBY_AC3_SPDIF=0x0092'
 endef
-
-$(PKG)_BUILD_SHARED =
