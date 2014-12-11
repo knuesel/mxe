@@ -3,8 +3,8 @@
 
 PKG             := gst-plugins-base
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 1.2.4
-$(PKG)_CHECKSUM := 036ce9eb723470cd8cc522057a59ad9468b3d489
+$(PKG)_VERSION  := 1.4.4
+$(PKG)_CHECKSUM := f46c9f096a641623b6d69f6c1aaba0c87a1dd71e
 $(PKG)_SUBDIR   := $(PKG)-$($(PKG)_VERSION)
 $(PKG)_FILE     := $(PKG)-$($(PKG)_VERSION).tar.xz
 $(PKG)_URL      := http://gstreamer.freedesktop.org/src/$(PKG)/$($(PKG)_FILE)
@@ -17,10 +17,7 @@ define $(PKG)_BUILD
         -exec $(SED) -i 's,glib-mkenums,$(PREFIX)/$(TARGET)/bin/glib-mkenums,g'       {} \; \
         -exec $(SED) -i 's,glib-genmarshal,$(PREFIX)/$(TARGET)/bin/glib-genmarshal,g' {} \;
     cd '$(1)' && ./configure \
-        --host='$(TARGET)' \
-        --build="`config.guess`" \
-        --prefix='$(PREFIX)/$(TARGET)' \
-        --disable-shared \
+	$(MXE_CONFIGURE_OPTS) \
         --disable-debug \
         --disable-examples \
         --disable-x \
@@ -29,5 +26,3 @@ define $(PKG)_BUILD
         --with-html-dir='$(1)/sink'
     $(MAKE) -C '$(1)' -j '$(JOBS)' install
 endef
-
-$(PKG)_BUILD_SHARED =
