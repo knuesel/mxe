@@ -23,11 +23,7 @@ define $(PKG)_CONFIGURE
     cd '$(1)' && autoreconf -fi
     # The option '--without-threads' means native win32 threading without pthread.
     cd '$(1)' && ./configure \
-        --host='$(TARGET)' \
-        --build='$(BUILD)' \
-        --enable-static \
-        --disable-shared \
-        --prefix='$(PREFIX)/$(TARGET)' \
+	$(MXE_CONFIGURE_OPTS) \
         --with-bsb \
         --with-grib \
         --with-ogr \
@@ -99,8 +95,3 @@ define $(PKG)_BUILD_i686-w64-mingw32
         LIBS="-ljpeg -lsecur32 -lportablexdr `'$(TARGET)-pkg-config' --libs openssl libtiff-4`"
     $($(PKG)_MAKE)
 endef
-
-# Can't use $(PKG)_BUILD_SHARED here as $(PKG)_BUILD_i686-w64-mingw32 has a
-# higher precedence.
-$(PKG)_BUILD_i686-w64-mingw32.shared =
-$(PKG)_BUILD_x86_64-w64-mingw32.shared =
