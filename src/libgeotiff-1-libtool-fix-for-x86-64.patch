@@ -1,0 +1,11 @@
+--- a/ltmain.sh	2015-01-19 17:46:42.137998916 +0100
++++ b/ltmain.sh	2015-01-19 17:48:09.283261642 +0100
+@@ -2560,7 +2560,7 @@
+     ;;
+   *ar\ archive*) # could be an import, or static
+     if eval $OBJDUMP -f $1 | $SED -e '10q' 2>/dev/null |
+-       $EGREP 'file format pe-i386(.*architecture: i386)?' >/dev/null ; then
++      $EGREP 'file format pe-(i386|x86-64)(.*architecture: i386)?' >/dev/null ; then
+       win32_nmres=`eval $NM -f posix -A $1 |
+ 	$SED -n -e '
+ 	    1,100{
