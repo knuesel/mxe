@@ -6,3 +6,5 @@
 /pkg
 /wip/
 /tmp-*
+*~
+*.swp
